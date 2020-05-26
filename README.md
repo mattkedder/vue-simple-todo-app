@@ -1,4 +1,4 @@
-# todos
+# vue-simple-todo-app
 
 ## Project setup
 ```
