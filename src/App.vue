@@ -1,28 +1,39 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div>
+  <Navbar :done="done" :total="total"></Navbar>
+  <br>
+  <br>
+    <div class="container mt-5">
+      <ListView :todos="todo" />
+    </div>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from './components/Navbar'
+import ListView from './components/ListView'
+import { todos } from './seed.js'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Navbar,
+    ListView
+  },
+  data() {
+    return {
+      todo: todos
+    }
+  },
+   computed: {
+        done() {
+            let todos = this.todo
+            let list = todos.filter(todo => todo.completed == true)
+            return list.length
+        },
+        total() {
+            return this.todo.length
+        }
+    },
+} 
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
