@@ -6,8 +6,8 @@
             </div>
             <div class="col-lg-6 col-md-6 mb-4">
                 <h3>Today, {{ getTodayDate }}</h3>
-                <GoalList  @delete-task="deleteTask" @finish-task="finisTask" :lists="getGoalList" />
-                <CreateTask @add-new-task="addNewTask" />
+                <GoalList :lists="getGoalList" />
+                <CreateTask />
             </div>
         </div>
 </template>
@@ -23,12 +23,6 @@ export default {
         DoneList,
         CreateTask
     },
-    props: {
-        todos: {
-            type: Array,
-            required: true
-        }
-    },
     data() {
         return {
             todo: this.todos
@@ -37,17 +31,6 @@ export default {
     methods: {
         moment: function() {
             return moment();
-        },
-        addNewTask(event) {
-            this.todo.push(event)
-        },
-        finisTask(event) {
-            let index = this.todo.findIndex(todo => todo.id === event.id)
-            this.todo[index].completed = true
-        },
-        deleteTask(event) {
-            let index = this.todo.findIndex(todo => todo.id === event.id)
-            this.todo.splice(index, 1);
         }
     },
     computed: {
@@ -55,18 +38,13 @@ export default {
             return moment(new Date).format('DD MMMM YYYY')
         },
         getDoneList() {
-            let todos = this.todo
-            let list = todos.filter(todo => todo.completed == true)
+            let list = this.$store.getters.allTask.filter(todo => todo.completed == true)
             return list
         },
         getGoalList() {
-            let todos = this.todo
-            let list = todos.filter(todo => todo.completed == false)
+            let list = this.$store.getters.allTask.filter(todo => todo.completed == false)
             return list
         }
-    },
-    beforeMount() {
-       
     }
 }
 </script>

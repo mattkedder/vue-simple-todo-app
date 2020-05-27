@@ -1,4 +1,5 @@
 # vue-simple-todo-app
+this repository is used for practice purpose
 
 ## Project setup
 ```

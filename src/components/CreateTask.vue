@@ -5,7 +5,7 @@
             <button type="button " class="btn btn-sm btn-secondary" v-bind:class="{active: completed === false}" @click="completedStatus(false)"><font-awesome-icon icon="bullseye" /> Goal</button>
             <button type="button " class="btn btn-sm btn-secondary" v-bind:class="{active: completed === true}" @click="completedStatus(true)"><font-awesome-icon icon="check" /> Done</button>
         </div>
-        <button type="button " class="btn btn-sm btn-primary float-right mt-1" :disabled="!checkDisabled" @click="createNewtask()">Post</button>
+        <button type="button " class="btn btn-sm btn-primary float-right mt-1" :disabled="!checkDisabled" @click="addTask()">Post</button>
     </div>
 </template>
 <script>
@@ -30,12 +30,14 @@ export default {
         completedStatus(status) {
             this.completed = status
         },
-        createNewtask() {
-            this.$emit('add-new-task', {
+        addTask() {
+            const params = {
                 id: Date.now().toString(),
                 task: this.task,
                 completed: this.completed
-            })
+            }
+
+            this.$store.dispatch('addTask', params)
             this.task = ''
         }
     }
